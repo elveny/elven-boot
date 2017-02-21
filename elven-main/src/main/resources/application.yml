@@ -1,0 +1,123 @@
+# application.yml
+# YML文件格式是YAML (YAML Aint Markup Language)编写的文件格式,YAML是一种直观的能够被电脑识别的的数据数据序列化格式,他并且容易被人类阅读.
+# 注意：yml的缩进，使用空格符，而不要使用tab键
+
+# 应用相关
+app:
+    name: elven-boot
+    description: ${app.name} is a Spring Boot application
+
+application:
+    message: Hello, elven
+
+# 应用信息
+info:
+    contact.email: elven1984@gmail.com
+    contact.phone: 18888888888
+    app.name: ${app.name}
+    app.description: ${app.name} is a Spring Boot application
+
+# 服务器设置（端口等）
+server:
+    port: 9999 # 0:随机端口, -1表示禁止HTTP端口
+    undertow:
+        accesslog:
+            enabled: true
+
+# 日志
+logging:
+    level:
+        root: INFO #FATAL ERROR WARN INFO DEBUG TRACE
+    path: ./    # ./表示当前应用的根目录
+    file: ./logs/elven-boot.log    # 设置日志文件
+
+
+# 管理监控点设置
+endpoints:
+    enabled: true
+    sensitive: false
+    cors:
+        allowed-origins: http://example.com
+        allowed-methods: GET,POST
+    actuator:
+        id: actuator
+        path: /actuator
+        enabled: true
+        sensitive: true
+    autoconfig:
+        id: autoconfig
+        path: /actuator/autoconfig
+        enabled: true
+        sensitive: true
+    beans:
+        id: beans
+        path: /actuator/beans
+        enabled: true
+        sensitive: false
+    configprops:
+        id: configprops
+        path: /actuator/configprops
+        enabled: true
+        sensitive: true
+    docs:
+        id: docs
+        path: /actuator/docs
+        enabled: true
+        sensitive: true
+    dump:
+        id: dump
+        path: /actuator/dump
+        enabled: true
+        sensitive: true
+    env:
+        id: env
+        path: /actuator/env
+        enabled: true
+        sensitive: true
+    flyway:
+        id: flyway
+        path: /actuator/flyway
+        enabled: true
+        sensitive: true
+    health:
+        id: health
+        path: /actuator/health
+        enabled: true
+        sensitive: true
+        # 缓存时间（毫秒）
+        time-to-live: 1000
+    info:
+        id: info
+        path: /actuator/info
+        enabled: true
+        sensitive: true
+    liquibase:
+        id: liquibase
+        path: /actuator/liquibase
+        enabled: true
+        sensitive: true
+    logfile:
+        id: logfile
+        path: /actuator/logfile
+        enabled: true
+        sensitive: true
+    metrics:
+        id: metrics
+        path: /actuator/metrics
+        enabled: true
+        sensitive: true
+    mappings:
+        id: mappings
+        path: /actuator/mappings
+        enabled: true
+        sensitive: true
+    shutdown:
+        id: shutdown
+        path: /actuator/shutdown
+        enabled: true
+        sensitive: true
+    trace:
+        id: trace
+        path: /actuator/trace
+        enabled: true
+        sensitive: true
