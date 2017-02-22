@@ -1,15 +1,13 @@
-group 'elven-framework'
-version '1.0-SNAPSHOT'
+bootRepackage.enabled = true
 
-apply plugin: 'java'
+jar {
+    baseName = 'elven-boot'
+    version =  '0.0.0'
+}
 
-sourceCompatibility = 1.8
-targetCompatibility = 1.8
-
-repositories {
-    mavenCentral()
+bootRepackage {
+    mainClass = 'tech.elven.boot.main.Application'
 }
 
 dependencies {
-    testCompile group: 'junit', name: 'junit', version: '4.11'
 }

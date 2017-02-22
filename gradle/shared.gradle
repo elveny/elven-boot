@@ -1,0 +1,76 @@
+apply plugin: 'java'
+apply plugin: 'idea'
+apply plugin: 'eclipse'
+
+configurations {
+  provided
+}
+
+sourceSets {
+  main.compileClasspath += configurations.provided
+  test.compileClasspath += configurations.provided
+  test.runtimeClasspath += configurations.provided
+}
+
+idea {
+  module {
+    downloadSources = true
+    scopes.PROVIDED.plus += [ configurations.provided ]
+    excludeDirs += [
+      file('bin'),      // containing build artifacts from Eclipse (if any)
+      file('work'),     // containing transient artifacts used by embedded Tomcat
+      file('logs'),     // containing app logs written by embedded Tomcat
+      file('data'),     // containing logs and data written by elasticsearch
+      file('.settings') // containing intentionally checked-in Eclipse metadata
+    ]
+  }
+}
+
+eclipse {
+  classpath {
+    downloadSources = true
+    plusConfigurations += [ configurations.provided ]
+  }
+}
+
+tasks.withType(JavaCompile) {
+  options.encoding = "UTF-8"
+}
+
+// 为项目生成**.jar/**-javadoc.jar/**-sources.jar
+task javadocJar(type: Jar, dependsOn: javadoc) {
+  classifier = 'javadoc'
+  from 'build/docs/javadoc'
+}
+
+task sourcesJar(type: Jar) {
+  classifier = 'sources'
+  from sourceSets.main.allSource
+}
+
+artifacts {
+  // archives javadocJar
+  archives sourcesJar
+}
+
+// add .gitkeep in empty dir when use git repository
+task initGitKeep << {
+  sourceSets*.java.srcDirs*.each{
+    if (it.exists()){
+      it.eachFileRecurse{ f ->
+        if (f.exists() && f.isDirectory() && f.list().size() == 0) {
+          (new File(f, '.gitkeep')).createNewFile()
+        }
+      }
+    }
+  }
+  sourceSets*.resources.srcDirs*.each{
+    if (it.exists()){
+      it.eachFileRecurse{ f ->
+        if (f.exists() && f.isDirectory() && f.list().size() == 0) {
+          (new File(f, '.gitkeep')).createNewFile()
+        }
+      }
+    }
+  }
+}
