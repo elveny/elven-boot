@@ -2,7 +2,7 @@
  * elven.tech Inc.
  * Copyright (c) 2017-2026 All Rights Reserved.
  */
-package tech.elven.boot.main;
+package tech.elven.boot;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

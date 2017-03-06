@@ -2,6 +2,12 @@
 # YML文件格式是YAML (YAML Aint Markup Language)编写的文件格式,YAML是一种直观的能够被电脑识别的的数据数据序列化格式,他并且容易被人类阅读.
 # 注意：yml的缩进，使用空格符，而不要使用tab键
 
+# project相关
+project:
+    artifactId: elven-boot
+    name: elven-main
+    description: boot.elven.tech
+
 # 应用相关
 app:
     name: elven-boot
@@ -31,6 +37,14 @@ logging:
     path: ./    # ./表示当前应用的根目录
     file: ./logs/elven-boot.log    # 设置日志文件
 
+# application管理（监控）服务相关设置
+management:
+    address: 127.0.0.1
+    # port:-1表示不能通过http访问管理服务
+    port: 9998
+    context-path: /manage
+    security:
+        enabled: false
 
 # 管理监控点设置
 endpoints:

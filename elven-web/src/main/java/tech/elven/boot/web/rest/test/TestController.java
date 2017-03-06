@@ -2,7 +2,7 @@
  * elven.tech Inc.
  * Copyright (c) 2017-2026 All Rights Reserved.
  */
-package tech.elven.boot.main.rest.test;
+package tech.elven.boot.web.rest.test;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -26,7 +26,7 @@ import org.springframework.web.bind.annotation.RestController;
  * <li>Content: create</li>
  */
 @RestController
-@RequestMapping("/elven.tech/rest/test")
+@RequestMapping("/boot.elven.tech/web/rest/test")
 public class TestController {
     private static final Logger logger = LoggerFactory.getLogger(TestController.class);
 

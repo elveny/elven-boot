@@ -10,4 +10,5 @@ bootRepackage {
 }
 
 dependencies {
+    compile project(':elven-web')
 }

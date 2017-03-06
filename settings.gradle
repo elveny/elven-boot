@@ -1,3 +1,4 @@
 rootProject.name = 'elven-boot'
 include 'elven-main'
+include 'elven-web'
 
