@@ -1,0 +1,5 @@
+127.0.0.1 - - [06/Mar/2017:22:54:42 +0800] "GET /manage/actuator/health HTTP/1.1" 200 105
+127.0.0.1 - - [06/Mar/2017:22:55:13 +0800] "GET /manage/actuator/health HTTP/1.1" 200 105
+127.0.0.1 - - [06/Mar/2017:22:55:58 +0800] "GET /manage/actuator/health HTTP/1.1" 200 105
+127.0.0.1 - - [06/Mar/2017:22:56:36 +0800] "GET /manage/actuator/health HTTP/1.1" 200 105
+127.0.0.1 - - [06/Mar/2017:22:57:01 +0800] "GET /manage/actuator/health HTTP/1.1" 200 105

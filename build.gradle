@@ -46,11 +46,31 @@ configure(subprojects) {subproject ->
 
     dependencies {
         compile("org.springframework.boot:spring-boot-starter")
+        compile("org.springframework.boot:spring-boot-starter-aop")
         compile("org.springframework.boot:spring-boot-starter-web"){
             exclude module: "spring-boot-starter-tomcat"
         }
         compile("org.springframework.boot:spring-boot-starter-undertow")
         compile("org.springframework.boot:spring-boot-starter-actuator")
+        compile("org.springframework.boot:spring-boot-starter-data-jpa")
+        compile("org.springframework.boot:spring-boot-starter-data-redis")
+
+        compile("mysql:mysql-connector-java:${mysqlVersion}")
+
+        compile("joda-time:joda-time:${jodatimeVersion}")
+
+        compile("com.alibaba:fastjson:${fastjsonVersion}")
+
+        compile("org.apache.lucene:lucene-core:${luceneVersion}")
+        compile("org.apache.lucene:lucene-queryparser:${luceneVersion}")
+        compile("org.apache.lucene:lucene-analyzers-common:${luceneVersion}")
+        compile("org.apache.lucene:lucene-queries:${luceneVersion}")
+        compile("org.apache.lucene:lucene-highlighter:${luceneVersion}")
+        compile("org.apache.lucene:lucene-memory:${luceneVersion}")
+
+        compile("org.apache.poi:poi:${poiVersion}")
+        compile("org.apache.poi:poi-ooxml:${poiVersion}")
+
         testCompile("org.springframework.boot:spring-boot-starter-test")
         testCompile("junit:junit:${junitVersion}")
     }

@@ -10,5 +10,7 @@ bootRepackage {
 }
 
 dependencies {
+    compile project(':elven-common')
     compile project(':elven-web')
+    compile project(':elven-plugins')
 }
