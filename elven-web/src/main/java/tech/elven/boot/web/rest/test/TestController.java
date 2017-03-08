@@ -40,14 +40,14 @@ public class TestController {
 
     @RequestMapping("hello")
     @ResponseBody
-    String hello() {
+    public String hello() {
         logger.info("start hello...");
         return "hello world!!!";
     }
 
     @RequestMapping("redis/set/{key}/{value}")
     @ResponseBody
-    String redisSet(@PathVariable String key, @PathVariable String value){
+    public String redisSet(@PathVariable String key, @PathVariable String value){
         logger.info("start redis/set/{}/{}", key, value);
         redisTemplate.opsForValue().set(key, value);
         return "success";
@@ -55,7 +55,7 @@ public class TestController {
 
     @RequestMapping("redis/get/{key}")
     @ResponseBody
-    String redisGet(@PathVariable String key){
+    public String redisGet(@PathVariable String key){
         logger.info("start redis/get/{}", key);
         String value = (String) redisTemplate.opsForValue().get(key);
         return key+":"+value;
