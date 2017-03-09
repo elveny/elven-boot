@@ -54,6 +54,7 @@ configure(subprojects) {subproject ->
         compile("org.springframework.boot:spring-boot-starter-actuator")
         compile("org.springframework.boot:spring-boot-starter-data-jpa")
         compile("org.springframework.boot:spring-boot-starter-data-redis")
+        compile("org.springframework.boot:spring-boot-starter-amqp")
 
         compile("mysql:mysql-connector-java:${mysqlVersion}")
 

@@ -1,0 +1,52 @@
+/**
+ * msxf.com Inc.
+ * Copyright (c) 2017-2026 All Rights Reserved.
+ */
+package tech.elven.boot.web.rest.test;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
+
+/**
+ * redis测试Controller
+ * @author qiusheng.wu
+ * @Filename RedisController.java
+ * @description
+ * @Version 1.0
+ * @History <li>Author: qiusheng.wu</li>
+ * <li>Date: 2017/3/9 18:28</li>
+ * <li>Version: 1.0</li>
+ * <li>Content: create</li>
+ */
+@RestController
+@RequestMapping("/boot.elven.tech/web/rest/test/redis")
+public class RedisController {
+    /** 日志记录器 **/
+    private static final Logger logger = LoggerFactory.getLogger(RedisController.class);
+
+    /** redis访问模板 **/
+    @Autowired
+    private RedisTemplate redisTemplate;
+
+    @RequestMapping("set/{key}/{value}")
+    @ResponseBody
+    public String set(@PathVariable String key, @PathVariable String value){
+        logger.info("start redis/set/{}/{}", key, value);
+        redisTemplate.opsForValue().set(key, value);
+        return "SUCCESS";
+    }
+
+    @RequestMapping("get/{key}")
+    @ResponseBody
+    public String get(@PathVariable String key){
+        logger.info("start redis/get/{}", key);
+        String value = (String) redisTemplate.opsForValue().get(key);
+        return key+":"+value;
+    }
+
+}

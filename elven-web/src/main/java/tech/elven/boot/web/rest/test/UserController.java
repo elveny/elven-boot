@@ -17,6 +17,7 @@ import tech.elven.boot.plugins.data.jpa.repository.UserRepository;
 import java.util.List;
 
 /**
+ * user数据库测试Controller
  * @Filename UserController.java
  *
  * @description
@@ -32,9 +33,10 @@ import java.util.List;
  * <li>Content: create</li>
  */
 @RestController
-@RequestMapping("/boot.elven.tech/web/rest/user")
+@RequestMapping("/boot.elven.tech/web/rest/test/user")
 public class UserController {
 
+    /** user数据库仓储 **/
     @Autowired
     private UserRepository userRepository;
 

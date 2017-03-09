@@ -156,7 +156,6 @@ spring:
             dialect: org.hibernate.dialect.MySQL5Dialect
 
 ---
-
 # data-redis配置
 spring:
     redis:
@@ -167,3 +166,12 @@ spring:
             min-idle: 0
             max-active: 8
             max-wait: -1
+---
+# rabbitmq配置
+spring:
+    rabbitmq:
+        host: 10.16.31.78
+        port: 5672
+        virtualHost: dev
+        username: dev
+        password: dev
