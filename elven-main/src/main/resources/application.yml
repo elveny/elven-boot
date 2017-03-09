@@ -166,12 +166,13 @@ spring:
             min-idle: 0
             max-active: 8
             max-wait: -1
+
 ---
 # rabbitmq配置
 spring:
     rabbitmq:
-        host: 10.16.31.78
+        host: 127.0.0.1
         port: 5672
-        virtualHost: dev
-        username: dev
-        password: dev
+        virtualHost: /
+        username: guest
+        password: guest

@@ -4,11 +4,20 @@
  */
 package tech.elven.boot.plugins.rabbitmq.config;
 
+import org.springframework.amqp.core.*;
+import org.springframework.amqp.rabbit.annotation.EnableRabbit;
+import org.springframework.amqp.rabbit.config.SimpleRabbitListenerContainerFactory;
+import org.springframework.amqp.rabbit.connection.CachingConnectionFactory;
+import org.springframework.amqp.rabbit.connection.ConnectionFactory;
+import org.springframework.amqp.rabbit.core.RabbitAdmin;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
+import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;
+import org.springframework.amqp.support.converter.MessageConverter;
 import org.springframework.boot.autoconfigure.amqp.RabbitProperties;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.messaging.converter.MessageConverter;
+import tech.elven.boot.plugins.rabbitmq.constants.MqConstant;
 
 /**
  * rabbitmq配置信息
@@ -42,8 +51,6 @@ public class RabbitMqConfigration {
      */
     @Bean
     public MessageConverter messageConverter() {
-        //Kroty转换器没测通
-        //return new KryoMessageConvertor();
         return new Jackson2JsonMessageConverter();
     }
 

@@ -4,9 +4,13 @@
  */
 package tech.elven.boot.plugins.rabbitmq.listener;
 
+import com.rabbitmq.client.Channel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.amqp.core.Message;
+import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.stereotype.Component;
+import tech.elven.boot.plugins.rabbitmq.constants.MqConstant;
 
 import java.io.IOException;
 

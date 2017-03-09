@@ -7,9 +7,9 @@ package tech.elven.boot.web.rest.test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -33,8 +33,16 @@ public class RedisController {
     @Autowired
     private RedisTemplate redisTemplate;
 
+    /**
+     * home
+     * @return
+     */
+    @RequestMapping()
+    public String home(){
+        return "home";
+    }
+
     @RequestMapping("set/{key}/{value}")
-    @ResponseBody
     public String set(@PathVariable String key, @PathVariable String value){
         logger.info("start redis/set/{}/{}", key, value);
         redisTemplate.opsForValue().set(key, value);
@@ -42,7 +50,6 @@ public class RedisController {
     }
 
     @RequestMapping("get/{key}")
-    @ResponseBody
     public String get(@PathVariable String key){
         logger.info("start redis/get/{}", key);
         String value = (String) redisTemplate.opsForValue().get(key);
