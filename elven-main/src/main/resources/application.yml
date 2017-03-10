@@ -136,43 +136,9 @@ endpoints:
         enabled: true
         sensitive: true
 
-# data-jpa配置
+# banner-mode
 spring:
-    datasource:
-        url: jdbc:mysql://127.0.0.1:3306/test?serverTimezone=UTC&characterEncoding=utf-8
-        username: test
-        password: 1223334444
-        driverClassName: com.mysql.cj.jdbc.Driver
-    jpa:
-        database: MYSQL
-        show-sql: true
-        hibernate:
-            # ddl-auto值：
-            # create：每次加载hibernate时都会删除上一次生成的表，然后根据model类再重新生成新表
-            # create-drop：每次加载hibernate时根据model类生成表，但sessionFactory关闭，表就自动删除
-            # update：第一次加载hibernate时根据model自动建立表结构，以后加载hibernate时会根据model类自动更新表结构，单不会删除以前的数据（最常用）
-            # validate： 每次加载hibernate，验证创建数据库表结构，只会和数据库中的表进行比较，不会创建新表，但会插入新值
-            ddl-auto: update
-            dialect: org.hibernate.dialect.MySQL5Dialect
-
----
-# data-redis配置
-spring:
-    redis:
-        host: 127.0.0.1
-        port: 6379
-        pool:
-            max-idle: 8
-            min-idle: 0
-            max-active: 8
-            max-wait: -1
-
----
-# rabbitmq配置
-spring:
-    rabbitmq:
-        host: 127.0.0.1
-        port: 5672
-        virtualHost: /
-        username: guest
-        password: guest
+    main:
+        banner-mode: "off"
+    profiles:
+        active: home

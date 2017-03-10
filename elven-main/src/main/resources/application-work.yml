@@ -1,0 +1,54 @@
+# application.yml
+# YML文件格式是YAML (YAML Aint Markup Language)编写的文件格式,YAML是一种直观的能够被电脑识别的的数据数据序列化格式,他并且容易被人类阅读.
+# 注意：yml的缩进，使用空格符，而不要使用tab键
+
+# spring 相关配置
+spring:
+
+    # banner开关
+    main:
+        banner-mode: "off"
+
+    # 数据源配置
+    datasource:
+        url: jdbc:mysql://192.168.2.60:3306/test?serverTimezone=UTC&characterEncoding=utf-8
+        username: paycore
+        password: paycore111
+        driverClassName: com.mysql.cj.jdbc.Driver
+
+    # data-jpa配置
+    jpa:
+        database: MYSQL
+        show-sql: true
+        hibernate:
+            # ddl-auto值：
+            # create：每次加载hibernate时都会删除上一次生成的表，然后根据model类再重新生成新表
+            # create-drop：每次加载hibernate时根据model类生成表，但sessionFactory关闭，表就自动删除
+            # update：第一次加载hibernate时根据model自动建立表结构，以后加载hibernate时会根据model类自动更新表结构，单不会删除以前的数据（最常用）
+            # validate： 每次加载hibernate，验证创建数据库表结构，只会和数据库中的表进行比较，不会创建新表，但会插入新值
+            ddl-auto: update
+            dialect: org.hibernate.dialect.MySQL5Dialect
+
+    # data-redis配置
+    redis:
+        pool:
+            max-idle: 8
+            min-idle: 0
+            max-active: 8
+            max-wait: -1
+        cluster:
+            nodes:
+                - 192.168.2.210:7000
+                - 192.168.2.210:7001
+                - 192.168.2.210:7002
+                - 192.168.2.210:7003
+                - 192.168.2.210:7004
+                - 192.168.2.210:7005
+
+    # rabbitmq配置
+    rabbitmq:
+        host: 10.16.31.78
+        port: 5672
+        virtualHost: dev
+        username: dev
+        password: dev
