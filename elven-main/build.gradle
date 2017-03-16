@@ -2,11 +2,11 @@ bootRepackage.enabled = true
 
 jar {
     baseName = 'elven-boot'
-    version =  '0.0.0'
+    version =  '0.0.1'
 }
 
 bootRepackage {
-    mainClass = 'tech.elven.boot.main.Application'
+    mainClass = 'tech.elven.boot.Application'
 }
 
 dependencies {

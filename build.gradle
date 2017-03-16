@@ -1,3 +1,19 @@
+apply plugin: 'java'
+apply plugin: 'idea'
+apply plugin: 'spring-boot'
+
+group 'tech.elven'
+version '1.0-SNAPSHOT'
+
+jar {
+    baseName = 'elven-boot'
+    version = '0.0.1-SNAPSHOT'
+}
+
+bootRepackage {
+    mainClass = 'tech.elven.boot.Application'
+}
+
 buildscript {
     repositories {
         // NOTE: You should declare only repositories that you need here
