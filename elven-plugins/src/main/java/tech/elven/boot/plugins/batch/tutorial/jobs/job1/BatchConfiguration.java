@@ -13,9 +13,7 @@ import org.springframework.batch.core.configuration.annotation.JobBuilderFactory
 import org.springframework.batch.core.configuration.annotation.StepBuilderFactory;
 import org.springframework.batch.core.launch.support.RunIdIncrementer;
 import org.springframework.batch.core.listener.JobExecutionListenerSupport;
-import org.springframework.batch.item.ItemProcessor;
-import org.springframework.batch.item.ItemReader;
-import org.springframework.batch.item.ItemWriter;
+import org.springframework.batch.item.*;
 import org.springframework.batch.item.database.JpaItemWriter;
 import org.springframework.batch.item.file.FlatFileItemReader;
 import org.springframework.batch.item.file.mapping.BeanWrapperFieldSetMapper;
@@ -100,6 +98,15 @@ public class BatchConfiguration {
     @Bean
     public ItemWriter<User> writer(){
         return items -> userRepository.save(items);
+    }
+
+    public ItemReader<User> reader1() {
+        return new ItemReader<User>() {
+            @Override
+            public User read() throws Exception, UnexpectedInputException, ParseException, NonTransientResourceException {
+                return null;
+            }
+        };
     }
     // end::readerwriterprocessor[]
 
