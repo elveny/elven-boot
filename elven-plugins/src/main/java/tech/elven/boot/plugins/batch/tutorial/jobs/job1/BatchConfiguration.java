@@ -89,7 +89,7 @@ public class BatchConfiguration {
         };
     }
 
-//    @Bean
+    @Bean
     public JpaItemWriter<User> jpaWriter(){
         JpaItemWriter<User> writer = new JpaItemWriter<User>();
         writer.setEntityManagerFactory(entityManagerFactory);
@@ -102,6 +102,31 @@ public class BatchConfiguration {
         return items -> userRepository.save(items);
     }
     // end::readerwriterprocessor[]
+
+    // tag::step[]
+    @Bean
+    public Step step1() {
+        return stepBuilderFactory.get("step1")
+                .<Person, User> chunk(2)
+                .reader(reader())
+                .processor(processor())
+                .writer(writer())
+                .build();
+    }
+
+    // end::step[]
+
+    // tag::job[]
+    @Bean
+    public Job importUserJob() {
+        return jobBuilderFactory.get("importUserJob")
+                .incrementer(new RunIdIncrementer())
+                .listener(listener())
+                .flow(step1())
+                .end()
+                .build();
+    }
+    // end::job[]
 
     // tag::joblistener[]
     @Bean
@@ -133,27 +158,4 @@ public class BatchConfiguration {
         };
     }
     // end::joblistener[]
-
-    // tag::jobstep[]
-    @Bean
-    public Step step1() {
-        return stepBuilderFactory.get("step1")
-                .<Person, User> chunk(2)
-                .reader(reader())
-                .processor(processor())
-                .writer(writer())
-                .build();
-    }
-
-    @Bean
-    public Job importUserJob() {
-        return jobBuilderFactory.get("importUserJob")
-                .incrementer(new RunIdIncrementer())
-                .listener(listener())
-                .flow(step1())
-                .end()
-                .build();
-    }
-    // end::jobstep[]
-
 }
