@@ -45,7 +45,7 @@ public class JobCompletionNotificationListener extends JobExecutionListenerSuppo
         super.beforeJob(jobExecution);
         logger.info("Id::"+jobExecution.getId());
         logger.info("JobId::"+jobExecution.getJobId()+", CreateTime::"+jobExecution.getCreateTime()+", EndTime::"+jobExecution.getEndTime());
-        logger.info("JobId::"+jobExecution.getJobId()+", StartTime::"+jobExecution.getStartTime()+", EndTime::"+jobExecution.getId());
+        logger.info("JobId::"+jobExecution.getJobId()+", StartTime::"+jobExecution.getStartTime()+", EndTime::"+jobExecution.getEndTime());
     }
 
     @Override

@@ -10,6 +10,9 @@ import org.springframework.batch.core.configuration.annotation.EnableBatchProces
 import org.springframework.batch.core.configuration.annotation.JobBuilderFactory;
 import org.springframework.batch.core.configuration.annotation.StepBuilderFactory;
 import org.springframework.batch.core.launch.support.RunIdIncrementer;
+import org.springframework.batch.item.ItemProcessor;
+import org.springframework.batch.item.ItemReader;
+import org.springframework.batch.item.ItemWriter;
 import org.springframework.batch.item.database.JpaItemWriter;
 import org.springframework.batch.item.file.FlatFileItemReader;
 import org.springframework.batch.item.file.mapping.BeanWrapperFieldSetMapper;
@@ -17,13 +20,13 @@ import org.springframework.batch.item.file.mapping.DefaultLineMapper;
 import org.springframework.batch.item.file.transform.DelimitedLineTokenizer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
-import org.springframework.boot.orm.jpa.EntityManagerFactoryBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.ClassPathResource;
 import tech.elven.boot.plugins.data.jpa.entity.User;
+import tech.elven.boot.plugins.data.jpa.repository.UserRepository;
 
-import javax.sql.DataSource;
+import javax.persistence.EntityManagerFactory;
 
 
 /**
@@ -47,16 +50,16 @@ public class BatchConfiguration {
     @Autowired
     private StepBuilderFactory stepBuilderFactory;
 
-//    @Autowired
-//    public DataSource dataSource;
-//
-//    @Autowired
-//    private EntityManagerFactoryBuilder builder;
+    @Autowired
+    private EntityManagerFactory entityManagerFactory;
+
+    @Autowired
+    private UserRepository userRepository;
 
 
     // tag::readerwriterprocessor[]
     @Bean
-    public FlatFileItemReader<Person> reader() {
+    public ItemReader<Person> reader() {
         FlatFileItemReader<Person> reader = new FlatFileItemReader<Person>();
         reader.setResource(new ClassPathResource("tech/elven/boot/plugins/batch/tutorial/jobs/job1/sample-data.csv"));
         reader.setLineMapper(new DefaultLineMapper<Person>() {{
@@ -71,16 +74,26 @@ public class BatchConfiguration {
     }
 
     @Bean
-    public PersonItemProcessor processor() {
-        return new PersonItemProcessor();
+    public ItemProcessor<Person, User> processor() {
+        return person -> {
+            String firstName = person.getFirstName().toUpperCase();
+            String lastName = person.getLastName().toUpperCase();
+
+            return new User(firstName+","+lastName, 20);
+        };
     }
 
     @Bean
-    public JpaItemWriter<User> writer(){
+    public JpaItemWriter<User> jpaWriter(){
         JpaItemWriter<User> writer = new JpaItemWriter<User>();
-//        writer.setEntityManagerFactory(builder.dataSource(dataSource).build());
+        writer.setEntityManagerFactory(entityManagerFactory);
 
         return writer;
+    }
+
+    @Bean
+    public ItemWriter<User> writer(){
+        return items -> userRepository.save(items);
     }
     // end::readerwriterprocessor[]
 
@@ -98,7 +111,7 @@ public class BatchConfiguration {
     @Bean
     public Step step1() {
         return stepBuilderFactory.get("step1")
-                .<Person, User> chunk(10)
+                .<Person, User> chunk(2)
                 .reader(reader())
                 .processor(processor())
                 .writer(writer())
