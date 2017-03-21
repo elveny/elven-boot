@@ -4,12 +4,15 @@
  */
 package tech.elven.boot.plugins.batch.tutorial.jobs.job1;
 
-import org.springframework.batch.core.Job;
-import org.springframework.batch.core.Step;
+import com.alibaba.fastjson.JSON;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.batch.core.*;
 import org.springframework.batch.core.configuration.annotation.EnableBatchProcessing;
 import org.springframework.batch.core.configuration.annotation.JobBuilderFactory;
 import org.springframework.batch.core.configuration.annotation.StepBuilderFactory;
 import org.springframework.batch.core.launch.support.RunIdIncrementer;
+import org.springframework.batch.core.listener.JobExecutionListenerSupport;
 import org.springframework.batch.item.ItemProcessor;
 import org.springframework.batch.item.ItemReader;
 import org.springframework.batch.item.ItemWriter;
@@ -27,6 +30,7 @@ import tech.elven.boot.plugins.data.jpa.entity.User;
 import tech.elven.boot.plugins.data.jpa.repository.UserRepository;
 
 import javax.persistence.EntityManagerFactory;
+import java.util.List;
 
 
 /**
@@ -43,6 +47,8 @@ import javax.persistence.EntityManagerFactory;
 @EnableBatchProcessing
 @EnableAutoConfiguration
 public class BatchConfiguration {
+
+    private static final Logger logger = LoggerFactory.getLogger(BatchConfiguration.class);
 
     @Autowired
     private JobBuilderFactory jobBuilderFactory;
@@ -83,7 +89,7 @@ public class BatchConfiguration {
         };
     }
 
-    @Bean
+//    @Bean
     public JpaItemWriter<User> jpaWriter(){
         JpaItemWriter<User> writer = new JpaItemWriter<User>();
         writer.setEntityManagerFactory(entityManagerFactory);
@@ -97,17 +103,38 @@ public class BatchConfiguration {
     }
     // end::readerwriterprocessor[]
 
-    // tag::jobstep[]
+    // tag::joblistener[]
     @Bean
-    public Job importUserJob(JobCompletionNotificationListener listener) {
-        return jobBuilderFactory.get("importUserJob")
-                .incrementer(new RunIdIncrementer())
-                .listener(listener)
-                .flow(step1())
-                .end()
-                .build();
-    }
+    public JobExecutionListener listener(){
+        return new JobExecutionListenerSupport(){
+            @Override
+            public void beforeJob(JobExecution jobExecution) {
+                super.beforeJob(jobExecution);
+                logger.info("Id::"+jobExecution.getId());
+                logger.info("JobId::"+jobExecution.getJobId()+", CreateTime::"+jobExecution.getCreateTime()+", EndTime::"+jobExecution.getEndTime());
+                logger.info("JobId::"+jobExecution.getJobId()+", StartTime::"+jobExecution.getStartTime()+", EndTime::"+jobExecution.getEndTime());
+            }
 
+            @Override
+            public void afterJob(JobExecution jobExecution) {
+                super.afterJob(jobExecution);
+
+                if (jobExecution.getStatus() == BatchStatus.COMPLETED){
+                    logger.info("!!! JOB FINISHED! Time to verify the results");
+
+                    List<User> users = userRepository.findAll();
+
+                    for (User user : users){
+                        logger.info("Found <" + JSON.toJSONString(user) + "> in the database.");
+                    }
+
+                }
+            }
+        };
+    }
+    // end::joblistener[]
+
+    // tag::jobstep[]
     @Bean
     public Step step1() {
         return stepBuilderFactory.get("step1")
@@ -115,6 +142,16 @@ public class BatchConfiguration {
                 .reader(reader())
                 .processor(processor())
                 .writer(writer())
+                .build();
+    }
+
+    @Bean
+    public Job importUserJob() {
+        return jobBuilderFactory.get("importUserJob")
+                .incrementer(new RunIdIncrementer())
+                .listener(listener())
+                .flow(step1())
+                .end()
                 .build();
     }
     // end::jobstep[]
