@@ -12,6 +12,7 @@ import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import tech.elven.boot.common.enums.ResultStatus;
 
 /**
  * redis测试Controller
@@ -48,7 +49,7 @@ public class RedisController {
         logger.info("start redis/set/{}/{}", key, value);
         ValueOperations<String, String> valueOperations = redisTemplate.opsForValue();
         valueOperations.set(key, value);
-        return "SUCCESS";
+        return ResultStatus.SUCCESS.code();
     }
 
     @RequestMapping("get/{key}")

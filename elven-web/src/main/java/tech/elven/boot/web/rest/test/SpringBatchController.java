@@ -14,6 +14,7 @@ import org.springframework.batch.core.repository.JobRestartException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import tech.elven.boot.common.enums.ResultStatus;
 import tech.elven.boot.plugins.batch.quickstart.DemoBatchConfiguration;
 
 /**
@@ -62,6 +63,6 @@ public class SpringBatchController {
 
         logger.info("jobExecution.status::::"+jobExecution.getStatus().toString());
 
-        return "SUCCESS";
+        return ResultStatus.SUCCESS.code();
     }
 }

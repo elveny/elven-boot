@@ -13,6 +13,7 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import tech.elven.boot.common.enums.ResultStatus;
 import tech.elven.boot.plugins.rabbitmq.constants.MqConstant;
 import tech.elven.boot.plugins.rabbitmq.enums.MqObjTypeEnum;
 
@@ -58,7 +59,7 @@ public class RabbitmqController {
     @RequestMapping("send/{content}")
     public String send(@PathVariable String content){
         rabbitTemplate.convertAndSend(MqConstant.DEMO_EXCHANGE_TOPIC, MqConstant.DEMO_ROUTING_KEY, content);
-        return "SUCCESS";
+        return ResultStatus.SUCCESS.code();
     }
 
     /**
@@ -83,6 +84,6 @@ public class RabbitmqController {
             deleteFlag = rabbitAdmin.deleteQueue(name);
         }
 
-        return "success?"+deleteFlag;
+        return ResultStatus.SUCCESS.code()+" ?"+deleteFlag;
     }
 }

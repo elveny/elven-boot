@@ -15,6 +15,8 @@ import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -37,6 +39,8 @@ import java.util.*;
  * <li>Content: create</li>
  */
 public class POIUtils {
+    private static final Logger logger = LoggerFactory.getLogger(POIUtils.class);
+
     /**
      * excel2007以下的版本
      */
@@ -69,6 +73,7 @@ public class POIUtils {
 
         // 校验文件后缀，如果没有适配的文件类型，则抛出异常
         if(EXCEL_TYPE_XLS.equalsIgnoreCase(suffix)){
+            logger.info("开始读取excel(xls)文件...");
             // 读取excel文件
             HSSFWorkbook workbook = new HSSFWorkbook(new FileInputStream(file));
 
@@ -81,12 +86,16 @@ public class POIUtils {
                 // 读取sheet名称
                 String sheetName = sheet.getSheetName();
 
+                logger.info("开始读取sheet：{}", sheetName);
+
                 // 迭代sheet的每一行
                 Iterator<Row> rows = sheet.iterator();
 
                 List<String[]> rowData = new ArrayList<String[]>();
                 while (rows.hasNext()){
                     HSSFRow row = (HSSFRow) rows.next();
+
+                    logger.info("开始读取row：{}", row.getRowNum());
 
                     // 迭代每一行的每一列数据
                     Iterator<Cell> cells = row.iterator();
@@ -105,6 +114,7 @@ public class POIUtils {
             }
         }
         else if(EXCEL_TYPE_XLSX.equalsIgnoreCase(suffix)){
+            logger.info("开始读取excel(xlsx)文件...");
             // 读取excel文件
             XSSFWorkbook workbook = new XSSFWorkbook(new FileInputStream(file));
 
@@ -117,12 +127,15 @@ public class POIUtils {
                 // 读取sheet名称
                 String sheetName = sheet.getSheetName();
 
+                logger.info("开始读取sheet：{}", sheetName);
+
                 // 迭代sheet的每一行
                 Iterator<Row> rows = sheet.iterator();
 
                 List<String[]> rowData = new ArrayList<String[]>();
                 while (rows.hasNext()){
                     XSSFRow row = (XSSFRow) rows.next();
+                    logger.info("开始读取row：{}", row.getRowNum());
 
                     // 迭代每一行的每一列数据
                     Iterator<Cell> cells = row.iterator();
