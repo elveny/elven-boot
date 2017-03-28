@@ -4,9 +4,12 @@
  */
 package tech.elven.boot.web.rest.test;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
+import org.springframework.util.StopWatch;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -35,6 +38,9 @@ import java.util.List;
 @RequestMapping("/boot.elven.tech/web/rest/test/user")
 public class UserController {
 
+    /** 日志记录器 **/
+    private static final Logger logger = LoggerFactory.getLogger(UserController.class);
+
     /** user数据库仓储 **/
     @Autowired
     private UserRepository userRepository;
@@ -54,7 +60,12 @@ public class UserController {
      */
     @RequestMapping("findAll")
     public List<User> findAll() {
-        return userRepository.findAll();
+        StopWatch stopWatch = new StopWatch("user.findAll");
+        stopWatch.start();
+        List<User> users = userRepository.findAll();
+        stopWatch.stop();
+        logger.info("findAll \r\n{}",stopWatch.prettyPrint());
+        return users;
     }
 
     /**
