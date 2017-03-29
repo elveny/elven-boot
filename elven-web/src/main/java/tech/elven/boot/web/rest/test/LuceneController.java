@@ -16,6 +16,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.util.Assert;
 import org.springframework.util.ResourceUtils;
+import org.springframework.util.StopWatch;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -67,14 +68,17 @@ public class LuceneController {
      */
     @RequestMapping("refresh")
     public String refresh() throws IOException {
+        StopWatch stopWatch = new StopWatch("lucene.refresh");
 
+        stopWatch.start("开始读取excel数据源");
         logger.info("开始读取excel数据源");
         long t1 = System.nanoTime();
         Map<String, List<String[]>> data = POIUtils.parse(ResourceUtils.getFile(excelFile));
         long t2 = System.nanoTime();
-
         logger.info("读取20171018.xlsx花费时间："+(t2-t1)/1000000000.0f+"(s)");
+        stopWatch.stop();
 
+        stopWatch.start("开始组装lunece document，并创建index");
         logger.info("开始组装lunece document，并创建index");
         long t3 = System.nanoTime();
 
@@ -128,7 +132,9 @@ public class LuceneController {
         long t4 = System.nanoTime();
 
         logger.info("将excel数据转换为lunece document，并创建index，花费时间："+(t4-t3)/1000000000.0f+"(s)");
+        stopWatch.stop();
 
+        logger.info("{}", stopWatch.prettyPrint());
         return ResultStatus.SUCCESS.code();
     }
 

@@ -60,11 +60,14 @@ public class UserController {
      */
     @RequestMapping("findAll")
     public List<User> findAll() {
-        StopWatch stopWatch = new StopWatch("user.findAll");
-        stopWatch.start();
+        StopWatch stopWatch = new StopWatch("user");
+        stopWatch.start("user.findAll");
         List<User> users = userRepository.findAll();
         stopWatch.stop();
-        logger.info("findAll \r\n{}",stopWatch.prettyPrint());
+
+        stopWatch.start("user.null");
+        stopWatch.stop();
+        logger.info("user \r\n{}",stopWatch.prettyPrint());
         return users;
     }
 

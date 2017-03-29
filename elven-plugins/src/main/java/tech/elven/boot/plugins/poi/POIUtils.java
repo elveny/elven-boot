@@ -95,8 +95,6 @@ public class POIUtils {
                 while (rows.hasNext()){
                     HSSFRow row = (HSSFRow) rows.next();
 
-                    logger.info("开始读取row：{}", row.getRowNum());
-
                     // 迭代每一行的每一列数据
                     Iterator<Cell> cells = row.iterator();
                     String[] cellData = new String[row.getLastCellNum()];
