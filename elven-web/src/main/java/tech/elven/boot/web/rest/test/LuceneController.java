@@ -70,7 +70,7 @@ public class LuceneController {
     public String refresh() throws IOException {
         StopWatch stopWatch = new StopWatch("lucene.refresh");
 
-        stopWatch.start("开始读取excel数据源");
+        stopWatch.start("读取excel数据源");
         logger.info("开始读取excel数据源");
         long t1 = System.nanoTime();
         Map<String, List<String[]>> data = POIUtils.parse(ResourceUtils.getFile(excelFile));
@@ -78,7 +78,7 @@ public class LuceneController {
         logger.info("读取20171018.xlsx花费时间："+(t2-t1)/1000000000.0f+"(s)");
         stopWatch.stop();
 
-        stopWatch.start("开始组装lunece document，并创建index");
+        stopWatch.start("组装lunece document，并创建index");
         logger.info("开始组装lunece document，并创建index");
         long t3 = System.nanoTime();
 
@@ -149,18 +149,25 @@ public class LuceneController {
     @RequestMapping("search/{field}/{keyword}")
     public List<Map<String, String>> search(@PathVariable String field, @PathVariable String keyword) throws IOException, ParseException {
 
+        StopWatch stopWatch = new StopWatch("lucene.search");
+
         // 初始化标准分析器（分词器）
         Analyzer analyzer = new StandardAnalyzer();
 
         // 创建lunece index目录
         Directory directory = FSDirectory.open(ResourceUtils.getFile(indexDir).toPath());
 
+        stopWatch.start("搜索");
         logger.info("开始搜索...");
         long t5 = System.nanoTime();
         List<Document> list = LuceneUtils.search(analyzer, directory, new String[]{field}, new String[]{keyword}, 1);
         directory.close();
         long t6 = System.nanoTime();
         logger.info("lunece搜索{}:{}花费时间："+(t6-t5)/1000000000.0f+"(s)", field, keyword);
+
+        stopWatch.stop();
+
+        logger.info("{}", stopWatch.prettyPrint());
 
         Assert.notEmpty(list);
 
