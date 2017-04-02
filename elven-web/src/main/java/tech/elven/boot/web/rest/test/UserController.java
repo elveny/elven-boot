@@ -78,7 +78,36 @@ public class UserController {
      */
     @RequestMapping("save")
     public User save(User user){
-        return userRepository.save(user);
+        /**
+         * spring.jpa.open_in_view=false会导致@Version乐观锁的version不会改变。
+         * spring.jpa.open_in_view会控制org.springframework.orm.jpa.support.OpenEntityManagerInViewInterceptor拦截器
+         */
+        // 第一步保存
+        userRepository.save(user);
+        /**
+         * 第一步保存之后：
+         * spring.jpa.open_in_view=false ===> version=0, 数据库表中version值0
+         * spring.jpa.open_in_view=true ===> version=0, 数据库表中version值0
+         */
+
+        // 第二步保存
+        user.setName(user.getName()+"_1");
+        userRepository.save(user);
+        /**
+         * 第二步保存之后：
+         * spring.jpa.open_in_view=false ===> version=0, 数据库表中version值1
+         * spring.jpa.open_in_view=true ===> version=1, 数据库表中version值0
+         */
+
+        // 第三步保存
+        user.setName(user.getName()+"_2");
+        userRepository.save(user);
+        /**
+         * 第三步保存之后：
+         * spring.jpa.open_in_view=false ===> 由于version=0，数据库表中的version的值已经是1，所以【报错：乐观锁不匹配错误】
+         * spring.jpa.open_in_view=true ===> version=2, 数据库表中version值2
+         */
+        return user;
     }
 
     /**

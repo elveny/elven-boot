@@ -20,6 +20,7 @@ spring:
     jpa:
         database: MYSQL
         show-sql: true
+        open_in_view: true
         hibernate:
             # ddl-auto值：
             # create：每次加载hibernate时都会删除上一次生成的表，然后根据model类再重新生成新表
