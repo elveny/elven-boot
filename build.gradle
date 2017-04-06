@@ -89,6 +89,9 @@ configure(subprojects) {subproject ->
         compile("org.apache.poi:poi:${poiVersion}")
         compile("org.apache.poi:poi-ooxml:${poiVersion}")
 
+        compile("us.codecraft:webmagic-core:${webmagicVersion}")
+        compile("us.codecraft:webmagic-extension:${webmagicVersion}")
+
         testCompile("org.springframework.boot:spring-boot-starter-test")
         testCompile("junit:junit:${junitVersion}")
     }
