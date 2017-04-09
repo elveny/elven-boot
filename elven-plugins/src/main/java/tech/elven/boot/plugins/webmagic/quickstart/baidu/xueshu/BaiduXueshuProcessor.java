@@ -5,7 +5,7 @@
 package tech.elven.boot.plugins.webmagic.quickstart.baidu.xueshu;
 
 import com.alibaba.fastjson.JSON;
-import com.sun.deploy.util.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import us.codecraft.webmagic.Page;
 import us.codecraft.webmagic.Site;
 import us.codecraft.webmagic.processor.PageProcessor;
@@ -43,35 +43,36 @@ public class BaiduXueshuProcessor implements PageProcessor {
     @Override
     public void process(Page page) {
 
-        List<BaiduXueshuSearchVo> searchResults = new ArrayList<BaiduXueshuSearchVo>();
+        List<BaiduXueshuSearchVo> searchResults = new ArrayList<>();
+        List<Selectable> searchResultNodes = page.getHtml().xpath("//div[@class='result sc_default_result xpath-log']").nodes();
 
-        for (int i = 1; i <= 10; i++) {
 
-            Selectable rootSelector = page.getHtml().xpath("//div[@id='"+i+"' and @class='result sc_default_result xpath-log']");
-            if(rootSelector.match()){
+        for (Selectable node : searchResultNodes) {
 
-                /** 标题 **/
-//                String title = rootSelector.xpath("div[@class='sc_content']/h3[@class='t c_font']/a/allText()").get();
-                Selectable titleSelector = rootSelector.xpath("div[@class='sc_content']/h3[@class='t c_font']/a");
-                String title = titleSelector.xpath("allText()").get();
-                /** 作者 **/
-                String authors = rootSelector.xpath("div[@class='sc_content']/div[@class='sc_info']/a/text()").get();
-                /** 概要 **/
-                String summary = rootSelector.xpath("div[@class='sc_content']/div[@class='c_abstract']/text()").get();
-                /** 来源 **/
-                String sources = StringUtils.join(rootSelector.xpath("div[@class='sc_content']/div[@class='c_abstract']/div[@class='sc_allversion']/span[@class='v_item_span']/a[@class='v_source']/text()").all(), ",");
-                /** 学科 **/
-                String subject = StringUtils.join(rootSelector.xpath("div[@class='sc_ext']/div[@class='sc_subject']/a/text()").all(), ",");
-                /** 网址 **/
-                String url = rootSelector.xpath("div[@class='sc_content']/h3[@class='t c_font']/a/@href").get();
+            /** 标题 **/
+            Selectable titleSelector = node.xpath("div[@class='sc_content']/h3[@class='t c_font']/a");
+            String title = titleSelector.xpath("allText()").get();
+            /** 作者 **/
+            String authors = node.xpath("div[@class='sc_content']/div[@class='sc_info']/a/text()").get();
+            /** 概要 **/
+            String summary = node.xpath("div[@class='sc_content']/div[@class='c_abstract']/text()").get();
+            /** 来源 **/
+            String sources = StringUtils.join(node.xpath("div[@class='sc_content']/div[@class='c_abstract']/div[@class='sc_allversion']/span[@class='v_item_span']/a[@class='v_source']/text()").all(), ",");
+            /** 学科 **/
+            String subject = StringUtils.join(node.xpath("div[@class='sc_ext']/div[@class='sc_subject']/a/text()").all(), ",");
+            /** 网址 **/
+            String url = node.xpath("div[@class='sc_content']/h3[@class='t c_font']/a/@href").get();
+            /** 下载地址 **/
+            String downUrl = node.xpath("div[@class='sc_ext']/div[@class='sc_other']/a/@href").get();
 
-                searchResults.add(new BaiduXueshuSearchVo(title, authors, summary, sources, subject, url));
-            }
-
+            searchResults.add(new BaiduXueshuSearchVo(title, authors, summary, sources, subject, url, downUrl));
 
         }
         page.putField("searchResults", JSON.toJSONString(searchResults));
 
+        // 把这些URL加到抓取列表中去
+        List<String> urls = page.getHtml().links().regex("http://xueshu.baidu.com/s\\?wd=\\w+&pn=\\w+&tn=SE_baiduxueshu_c1gjeupa&ie=utf-8&sc_f_para=sc_tasktype%3D%7BfirstSimpleSearch%7D&sc_hit=1").all();
+        page.addTargetRequests(urls);
     }
 
     @Override

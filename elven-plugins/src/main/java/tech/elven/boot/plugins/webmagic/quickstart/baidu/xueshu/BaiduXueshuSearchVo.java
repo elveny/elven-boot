@@ -27,6 +27,8 @@ public class BaiduXueshuSearchVo {
     private String subject;
     /** 网址 **/
     private String url;
+    /** 下载地址 **/
+    private String downUrl;
 
     public BaiduXueshuSearchVo() {
     }
@@ -46,6 +48,16 @@ public class BaiduXueshuSearchVo {
         this.sources = sources;
         this.subject = subject;
         this.url = url;
+    }
+
+    public BaiduXueshuSearchVo(String title, String authors, String summary, String sources, String subject, String url, String downUrl) {
+        this.title = title;
+        this.authors = authors;
+        this.summary = summary;
+        this.sources = sources;
+        this.subject = subject;
+        this.url = url;
+        this.downUrl = downUrl;
     }
 
     public String getTitle() {
@@ -94,5 +106,13 @@ public class BaiduXueshuSearchVo {
 
     public void setUrl(String url) {
         this.url = url;
+    }
+
+    public String getDownUrl() {
+        return downUrl;
+    }
+
+    public void setDownUrl(String downUrl) {
+        this.downUrl = downUrl;
     }
 }
