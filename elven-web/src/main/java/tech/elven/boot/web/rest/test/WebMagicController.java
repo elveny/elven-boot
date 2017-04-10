@@ -4,6 +4,7 @@
  */
 package tech.elven.boot.web.rest.test;
 
+import com.alibaba.fastjson.JSON;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,7 +14,6 @@ import tech.elven.boot.plugins.webmagic.quickstart.baidu.xueshu.BaiduXueshuArtic
 import tech.elven.boot.plugins.webmagic.quickstart.baidu.xueshu.BaiduXueshuProcessor;
 import us.codecraft.webmagic.Site;
 import us.codecraft.webmagic.Spider;
-import us.codecraft.webmagic.model.ConsolePageModelPipeline;
 import us.codecraft.webmagic.model.OOSpider;
 import us.codecraft.webmagic.pipeline.ConsolePipeline;
 import us.codecraft.webmagic.processor.example.GithubRepoPageProcessor;
@@ -66,10 +66,12 @@ public class WebMagicController {
 
     @RequestMapping("baiduXueshuArticle")
     public String baiduXueshuArticle(){
-        OOSpider.create(Site.me().setSleepTime(1000), new ConsolePageModelPipeline(), BaiduXueshuArticle.class)
-                .addUrl("http://xueshu.baidu.com/s?wd=paperuri%3A%28861e4d0498bd9b65a673e1d41f00bd34%29&filter=sc_long_sign&sc_ks_para=q%3DSpark%20Plasma%20Sintering%20of%20Alumina&sc_us=543466628458669838&tn=SE_baiduxueshu_c1gjeupa&ie=utf-8")
-                .thread(5)
-                .run();
-        return ResultStatus.SUCCESS.code();
+        OOSpider ooSpider = OOSpider.create(Site.me(), BaiduXueshuArticle.class);
+
+        BaiduXueshuArticle article = ooSpider.get("http://xueshu.baidu.com/s?wd=paperuri%3A%28861e4d0498bd9b65a673e1d41f00bd34%29&filter=sc_long_sign&sc_ks_para=q%3DSpark%20Plasma%20Sintering%20of%20Alumina&sc_us=543466628458669838&tn=SE_baiduxueshu_c1gjeupa&ie=utf-8");
+
+        logger.info("{}", JSON.toJSONString(article));
+
+        return JSON.toJSONString(article);
     }
 }

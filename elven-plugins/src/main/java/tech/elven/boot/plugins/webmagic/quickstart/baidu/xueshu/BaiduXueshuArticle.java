@@ -5,7 +5,6 @@
 package tech.elven.boot.plugins.webmagic.quickstart.baidu.xueshu;
 
 import us.codecraft.webmagic.model.annotation.ExtractBy;
-import us.codecraft.webmagic.model.annotation.TargetUrl;
 
 import java.util.List;
 
@@ -24,7 +23,7 @@ import java.util.List;
  * <li>Version: 1.0</li>
  * <li>Content: create</li>
  */
-@TargetUrl("http://xueshu.baidu.com/s?wd=paperuri%3A%28861e4d0498bd9b65a673e1d41f00bd34%29&filter=sc_long_sign&sc_ks_para=q%3DSpark%20Plasma%20Sintering%20of%20Alumina&sc_us=543466628458669838&tn=SE_baiduxueshu_c1gjeupa&ie=utf-8")
+//@TargetUrl("http://xueshu.baidu.com/s?wd=paperuri%3A%28861e4d0498bd9b65a673e1d41f00bd34%29&filter=sc_long_sign&sc_ks_para=q%3DSpark%20Plasma%20Sintering%20of%20Alumina&sc_us=543466628458669838&tn=SE_baiduxueshu_c1gjeupa&ie=utf-8")
 public class BaiduXueshuArticle {
     /** 标题 **/
     @ExtractBy("//div[@id='dtl_l']/div[1]/h3/a/text()")
@@ -38,7 +37,7 @@ public class BaiduXueshuArticle {
     /** 来源 **/
     @ExtractBy("//div[@class='c_content content_hidden']/div[@class='publish_wr']/p[@class='publish_text']/allText()")
     private String publish;
-    /** 学科 **/
+    /** 引用次数 **/
     @ExtractBy("//div[@class='c_content content_hidden']/div[@class='ref_wr']/p[2]/a/text()")
     private int reference;
 

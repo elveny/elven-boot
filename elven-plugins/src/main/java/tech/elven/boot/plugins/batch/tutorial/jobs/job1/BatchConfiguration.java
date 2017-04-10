@@ -203,6 +203,65 @@ public class BatchConfiguration {
 //        writer.setLineAggregator(delimitedLineAggregator);
 //        return writer;
 //    }
+
+    /////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    @Bean
+    public ItemReader<User> reader2() {
+        logger.info("reader2::start::");
+        AbstractPaginatedDataItemReader<User> reader = new AbstractPaginatedDataItemReader<User>() {
+            @Override
+            protected Iterator<User> doPageRead() {
+                logger.info("reader1::doing::");
+                Iterator<User> results = userRepository.findAll(new PageRequest(page, pageSize)).getContent().iterator();
+                while (results.hasNext()){
+                    userRepository.delete(results.next());
+                }
+                return results;
+            }
+        };
+        reader.setPageSize(10);
+        reader.setName("reader2");
+
+        logger.info("reader2::end::");
+        return reader;
+    }
+
+    public ItemProcessor<User, User> processor2(){
+        logger.info("processor2::start::");
+        return user -> {
+            logger.info("processor2::doing::");
+
+            userRepository.delete(user.getId());
+
+            return user;
+        };
+    }
+
+    public ItemWriter<User> writer2(){
+        logger.info("writer2::start::");
+
+        FlatFileItemWriter<User> writer = new FlatFileItemWriter<User>();
+        writer.setEncoding("utf-8");
+        writer.setLineSeparator("\r\n");
+        writer.setResource(new PathResource("out/tech/elven/boot/plugins/batch/tutorial/jobs/job1/sample-data2.csv"));
+        writer.setAppendAllowed(true);
+        writer.setShouldDeleteIfExists(true);
+
+        FormatterLineAggregator<User> formatterLineAggregator = new FormatterLineAggregator<User>();
+        formatterLineAggregator.setFormat("%-20s%-20s");
+        String[] names = {"id", "name", "age", "version"};
+        BeanWrapperFieldExtractor<User> beanWrapperFieldExtractor = new BeanWrapperFieldExtractor<User>();
+        beanWrapperFieldExtractor.setNames(names);
+        formatterLineAggregator.setFieldExtractor(beanWrapperFieldExtractor);
+        writer.setLineAggregator(formatterLineAggregator);
+
+        logger.info("writer2::end::");
+
+        return writer;
+    }
+
+
     // end::readerwriterprocessor[]
 
     // tag::step[]
@@ -235,6 +294,20 @@ public class BatchConfiguration {
                 .build();
     }
 
+    public Step step2(){
+        return stepBuilderFactory.get("step2")
+                .listener(stepExecutionListener())
+                .listener(itemReadListener())
+                .listener(itemProcessListener())
+                .listener(itemWriteListener())
+                .listener(chunkListener())
+                .<User, User> chunk(2)
+                .reader(reader2())
+                .processor(processor2())
+                .writer(writer2())
+                .build();
+    }
+
     // end::step[]
 
     // tag::job[]
@@ -245,6 +318,7 @@ public class BatchConfiguration {
                 .listener(jobExecutionListener())
                 .flow(step())
                 .next(step1())
+                .next(step2())
                 .end()
                 .build();
     }
