@@ -45,6 +45,7 @@ configure(subprojects) { project ->
     configurations {
         all*.exclude group: 'commons-logging', module: 'commons-logging'
         all*.exclude group: 'log4j', module: 'log4j'
+        all*.exclude group: 'org.slf4j', module: 'slf4j-log4j12'
     }
 
     eclipse.classpath {
@@ -89,9 +90,7 @@ configure(subprojects) {subproject ->
         compile("org.apache.poi:poi:${poiVersion}")
         compile("org.apache.poi:poi-ooxml:${poiVersion}")
 
-        compile("us.codecraft:webmagic-core:${webmagicVersion}"){
-            exclude group: 'org.slf4j', module: 'slf4j-log4j12'
-        }
+        compile("us.codecraft:webmagic-core:${webmagicVersion}")
         compile("us.codecraft:webmagic-extension:${webmagicVersion}")
 
         compile("org.zeroturnaround:zt-zip:${ztzipVersion}")

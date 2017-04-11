@@ -1,3 +1,5 @@
-127.0.0.1 - - [09/Mar/2017:23:33:47 +0800] "GET /actuator/health HTTP/1.1" 404 108
-127.0.0.1 - - [09/Mar/2017:23:33:47 +0800] "GET /favicon.ico HTTP/1.1" 404 104
-127.0.0.1 - - [09/Mar/2017:23:33:47 +0800] "GET /favicon.ico HTTP/1.1" 404 104
+127.0.0.1 - - [10/Apr/2017:20:47:00 +0800] "GET /actuator/beans HTTP/1.1" 404 107
+127.0.0.1 - - [10/Apr/2017:20:47:00 +0800] "GET /favicon.ico HTTP/1.1" 404 104
+127.0.0.1 - - [10/Apr/2017:20:47:27 +0800] "GET /manage/actuator/beans HTTP/1.1" 200 94431
+127.0.0.1 - - [10/Apr/2017:20:47:39 +0800] "GET /manage/actuator/env HTTP/1.1" 200 33803
+127.0.0.1 - - [10/Apr/2017:21:18:10 +0800] "GET /manage/actuator/env HTTP/1.1" 200 34505
