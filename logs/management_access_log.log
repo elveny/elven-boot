@@ -1,5 +1,6 @@
-127.0.0.1 - - [10/Apr/2017:20:47:00 +0800] "GET /actuator/beans HTTP/1.1" 404 107
-127.0.0.1 - - [10/Apr/2017:20:47:00 +0800] "GET /favicon.ico HTTP/1.1" 404 104
-127.0.0.1 - - [10/Apr/2017:20:47:27 +0800] "GET /manage/actuator/beans HTTP/1.1" 200 94431
-127.0.0.1 - - [10/Apr/2017:20:47:39 +0800] "GET /manage/actuator/env HTTP/1.1" 200 33803
-127.0.0.1 - - [10/Apr/2017:21:18:10 +0800] "GET /manage/actuator/env HTTP/1.1" 200 34505
+127.0.0.1 - - [11/Apr/2017:14:12:03 +0800] "GET /manage/actuator/env HTTP/1.1" 200 34342
+127.0.0.1 - - [11/Apr/2017:14:12:04 +0800] "GET /favicon.ico HTTP/1.1" 404 115
+127.0.0.1 - - [11/Apr/2017:14:12:14 +0800] "GET /manage/actuator/matices HTTP/1.1" 404 127
+127.0.0.1 - - [11/Apr/2017:14:12:35 +0800] "GET /manage/actuator/metices HTTP/1.1" 404 127
+127.0.0.1 - - [11/Apr/2017:14:13:25 +0800] "GET /manage/actuator/metrics HTTP/1.1" 200 894
+127.0.0.1 - - [11/Apr/2017:14:13:41 +0800] "GET /manage/actuator/metrics HTTP/1.1" 200 894

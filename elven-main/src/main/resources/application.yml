@@ -6,7 +6,7 @@
 project:
     artifactId: elven-boot
     name: elven-main
-    description: boot.elven.tech
+    description: boot.elven.site
 
 # 应用相关
 app:
