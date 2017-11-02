@@ -48,7 +48,7 @@ public class RabbitmqController {
      */
     @RequestMapping()
     public String home(){
-        return "home";
+        return "rabbitmq:home";
     }
 
     /**

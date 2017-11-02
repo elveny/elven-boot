@@ -47,7 +47,7 @@ public class ZtzipController {
      */
     @RequestMapping()
     public String home(){
-        return "home";
+        return "ztzip:home";
     }
 
     /**

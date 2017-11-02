@@ -59,7 +59,7 @@ public class LuceneController {
      */
     @RequestMapping()
     public String home(){
-        return "home";
+        return "lucene:home";
     }
 
     /**

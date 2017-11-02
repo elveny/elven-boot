@@ -51,7 +51,7 @@ public class UserController {
      */
     @RequestMapping()
     public String home(){
-        return "home";
+        return "user:home";
     }
 
     /**

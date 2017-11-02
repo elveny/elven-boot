@@ -6,7 +6,7 @@ jar {
 }
 
 bootRepackage {
-    mainClass = 'tech.elven.boot.Application'
+    mainClass = 'site.elven.boot.Application'
 }
 
 dependencies {

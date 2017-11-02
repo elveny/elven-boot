@@ -51,7 +51,7 @@ public class SpringBatchController {
      */
     @RequestMapping()
     public String home(){
-        return "home";
+        return "batch:home";
     }
 
     @RequestMapping("hello")

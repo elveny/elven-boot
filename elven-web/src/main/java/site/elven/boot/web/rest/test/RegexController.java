@@ -39,7 +39,7 @@ public class RegexController {
      */
     @RequestMapping()
     public String home(){
-        return "home";
+        return "regex:home";
     }
 
     /**

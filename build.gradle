@@ -2,7 +2,7 @@ apply plugin: 'java'
 apply plugin: 'idea'
 apply plugin: 'spring-boot'
 
-group 'tech.elven'
+group 'site.elven'
 version '1.0-SNAPSHOT'
 
 jar {
@@ -11,7 +11,7 @@ jar {
 }
 
 bootRepackage {
-    mainClass = 'tech.elven.boot.Application'
+    mainClass = 'site.elven.boot.Application'
 }
 
 buildscript {
@@ -39,7 +39,7 @@ configure(subprojects) { project ->
     sourceCompatibility = javaVersion
     targetCompatibility = javaVersion
 
-    group = 'tech.elven'
+    group = 'site.elven'
     version '1.0-SNAPSHOT'
 
     configurations {
@@ -94,6 +94,9 @@ configure(subprojects) {subproject ->
         compile("us.codecraft:webmagic-extension:${webmagicVersion}")
 
         compile("org.zeroturnaround:zt-zip:${ztzipVersion}")
+        compile("net.javacrumbs.shedlock:shedlock-spring:${shedlockVersion}")
+        compile("net.javacrumbs.shedlock:shedlock-provider-jdbc-template:${shedlockVersion}")
+        compile("net.javacrumbs.shedlock:shedlock-provider-jedis:${shedlockVersion}")
 
         testCompile("org.springframework.boot:spring-boot-starter-test")
         testCompile("junit:junit:${junitVersion}")

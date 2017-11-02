@@ -45,7 +45,7 @@ public class WebMagicController {
      */
     @RequestMapping()
     public String home(){
-        return "home";
+        return "webmagic:home";
     }
 
     @RequestMapping("githubRepo")

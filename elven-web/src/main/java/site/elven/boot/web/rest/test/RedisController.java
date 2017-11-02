@@ -41,7 +41,7 @@ public class RedisController {
      */
     @RequestMapping()
     public String home(){
-        return "home";
+        return "redis:home";
     }
 
     @RequestMapping("set/{key}/{value}")
