@@ -30,8 +30,7 @@ public class ShedlockService {
 
     private final static Logger logger = LoggerFactory.getLogger(ShedlockService.class);
 
-    private static final int TOW_MIN = 2 * 60 * 1000;
-
+    private static final int ONE_MIN = 1 * 60 * 1000;
 
     public void scheduledTask1() {
         logger.info("開始ScheduledService.scheduledTask1");
@@ -40,8 +39,8 @@ public class ShedlockService {
         logger.info("結束ScheduledService.scheduledTask1");
     }
 
-    @Scheduled(cron = "0 */15 * * * *")
-    @SchedulerLock(name = "jdbcTemplateScheduledTask1", lockAtLeastFor = TOW_MIN, lockAtMostFor = TOW_MIN)
+    @Scheduled(cron = "*/10 * * * * *")
+    @SchedulerLock(name = "jdbcTemplateScheduledTask1", lockAtLeastFor = ONE_MIN, lockAtMostFor = ONE_MIN)
     public void jdbcTemplateLock() {
         logger.info("start jdbcTemplateLock");
         // do something
