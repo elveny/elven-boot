@@ -27,22 +27,13 @@ import site.elven.boot.common.enums.ResultStatus;
  */
 @RestController
 @RequestMapping("/boot.elven.site/web/rest/test/redis")
-public class RedisController {
+public class RedisController extends BaseController {
     /** 日志记录器 **/
     private static final Logger logger = LoggerFactory.getLogger(RedisController.class);
 
     /** redis访问模板 **/
     @Autowired
     private RedisTemplate redisTemplate;
-
-    /**
-     * home
-     * @return
-     */
-    @RequestMapping()
-    public String home(){
-        return "redis:home";
-    }
 
     @RequestMapping("set/{key}/{value}")
     public String set(@PathVariable String key, @PathVariable String value){

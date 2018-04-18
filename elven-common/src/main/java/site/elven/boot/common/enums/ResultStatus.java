@@ -25,7 +25,7 @@ import java.util.List;
 public enum ResultStatus {
 
     SUCCESS("success", "成功"),
-    FAIL("fail", "成功"),
+    FAIL("fail", "失败"),
     ;
 
     /** 枚举值 */

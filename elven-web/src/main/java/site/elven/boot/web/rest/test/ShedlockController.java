@@ -28,21 +28,13 @@ import site.elven.boot.plugins.shedlock.ShedlockService;
  */
 @RestController
 @RequestMapping("/boot.elven.site/web/rest/test/shedlock")
-public class ShedlockController {
+public class ShedlockController extends BaseController {
 
     /** 日志记录器 **/
     private static final Logger logger = LoggerFactory.getLogger(ShedlockController.class);
 
     @Autowired
     private ShedlockService shedlockService;
-    /**
-     * home
-     * @return
-     */
-    @RequestMapping()
-    public String home(){
-        return "shedlock:home";
-    }
 
     @RequestMapping("jdbc")
     public String jdbc() {

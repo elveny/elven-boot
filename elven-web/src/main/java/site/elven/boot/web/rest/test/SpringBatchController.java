@@ -29,7 +29,7 @@ import site.elven.boot.plugins.batch.quickstart.DemoBatchConfiguration;
  */
 @RestController
 @RequestMapping("/boot.elven.site/web/rest/test/batch")
-public class SpringBatchController {
+public class SpringBatchController extends BaseController {
     /** 日志记录器 **/
     private static final Logger logger = LoggerFactory.getLogger(SpringBatchController.class);
 
@@ -44,15 +44,6 @@ public class SpringBatchController {
 
     @Autowired
     private Step twoStep;
-
-    /**
-     * home
-     * @return
-     */
-    @RequestMapping()
-    public String home(){
-        return "batch:home";
-    }
 
     @RequestMapping("hello")
     public String hello() throws JobParametersInvalidException, JobExecutionAlreadyRunningException, JobRestartException, JobInstanceAlreadyCompleteException {

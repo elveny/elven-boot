@@ -28,19 +28,10 @@ import site.elven.boot.common.utils.RegexUtil;
  */
 @RestController
 @RequestMapping("/boot.elven.site/web/rest/test/regex")
-public class RegexController {
+public class RegexController extends BaseController {
 
     /** 日志记录器 **/
     private static final Logger logger = LoggerFactory.getLogger(RegexController.class);
-
-    /**
-     * home
-     * @return
-     */
-    @RequestMapping()
-    public String home(){
-        return "regex:home";
-    }
 
     /**
      *

@@ -47,20 +47,11 @@ import java.util.Map;
  */
 @RestController
 @RequestMapping("/boot.elven.site/web/rest/test/lucene")
-public class LuceneController {
+public class LuceneController extends BaseController {
     private static final Logger logger = LoggerFactory.getLogger(LuceneController.class);
 
     private String excelFile = "classpath:site/elven/boot/plugins/poi/20170118.xlsx";
     private String indexDir = "out/site/elven/boot/plugins/lucene/index/bankInfo.index";
-
-    /**
-     * home
-     * @return
-     */
-    @RequestMapping()
-    public String home(){
-        return "lucene:home";
-    }
 
     /**
      * 刷新lucene index
@@ -73,7 +64,7 @@ public class LuceneController {
         stopWatch.start("读取excel数据源");
         logger.info("开始读取excel数据源");
         long t1 = System.nanoTime();
-        Map<String, List<String[]>> data = POIUtils.parse(ResourceUtils.getFile(excelFile));
+        Map<String, List<String[]>> data = POIUtils.read(ResourceUtils.getFile(excelFile));
         long t2 = System.nanoTime();
         logger.info("读取20171018.xlsx花费时间："+(t2-t1)/1000000000.0f+"(s)");
         stopWatch.stop();

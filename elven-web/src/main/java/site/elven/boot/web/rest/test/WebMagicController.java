@@ -7,11 +7,16 @@ package site.elven.boot.web.rest.test;
 import com.alibaba.fastjson.JSON;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.client.RestTemplate;
 import site.elven.boot.common.enums.ResultStatus;
 import site.elven.boot.plugins.webmagic.quickstart.baidu.xueshu.BaiduXueshuArticle;
 import site.elven.boot.plugins.webmagic.quickstart.baidu.xueshu.BaiduXueshuProcessor;
+import site.elven.boot.plugins.webmagic.quickstart.ximalaya.XimalayaAlbumProcessor;
+import site.elven.boot.plugins.webmagic.quickstart.ximalaya.XimalayaSoundFilePipeline;
 import us.codecraft.webmagic.Site;
 import us.codecraft.webmagic.Spider;
 import us.codecraft.webmagic.model.OOSpider;
@@ -35,18 +40,12 @@ import us.codecraft.webmagic.processor.example.GithubRepoPageProcessor;
  */
 @RestController
 @RequestMapping("/boot.elven.site/web/rest/test/webmagic")
-public class WebMagicController {
+public class WebMagicController extends BaseController {
     /** 日志记录器 **/
     private static final Logger logger = LoggerFactory.getLogger(WebMagicController.class);
 
-    /**
-     * home
-     * @return
-     */
-    @RequestMapping()
-    public String home(){
-        return "webmagic:home";
-    }
+    @Value("${webmagic.ximalaya.filePath}")
+    private String filePath;
 
     @RequestMapping("githubRepo")
     public String githubRepo(){
@@ -73,5 +72,33 @@ public class WebMagicController {
         logger.info("{}", JSON.toJSONString(article));
 
         return JSON.toJSONString(article);
+    }
+
+
+    @RequestMapping("ximalayaSound")
+    public String ximalayaSound(String zhuboId, String albumId){
+
+        if(StringUtils.isEmpty(zhuboId)){
+            return ResultStatus.FAIL.code();
+        }
+
+        String url = "";
+        if(StringUtils.isEmpty(albumId)){
+            url = "http://www.ximalaya.com/" + zhuboId + "/album/";
+        }
+        else {
+            url = "http://www.ximalaya.com/" + zhuboId + "/album/" + albumId;
+        }
+
+        XimalayaAlbumProcessor processor = new XimalayaAlbumProcessor();
+        processor.setZhuboId(zhuboId);
+
+        Spider.create(processor)
+                .addPipeline(new XimalayaSoundFilePipeline(filePath, new RestTemplate()))
+                .addUrl(url)
+                .thread(5)
+                .run();
+
+        return ResultStatus.SUCCESS.code();
     }
 }

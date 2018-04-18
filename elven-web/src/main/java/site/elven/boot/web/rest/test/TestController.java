@@ -27,19 +27,10 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @RequestMapping("/boot.elven.site/web/rest/test/test")
-public class TestController {
+public class TestController extends BaseController {
 
     /** 日志记录器 **/
     private static final Logger logger = LoggerFactory.getLogger(TestController.class);
-
-    /**
-     * home
-     * @return
-     */
-    @RequestMapping()
-    public String home(){
-        return "test:home";
-    }
 
     @RequestMapping("hello")
     public String hello() {

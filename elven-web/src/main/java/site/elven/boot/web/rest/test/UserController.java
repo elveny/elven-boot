@@ -36,7 +36,7 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/boot.elven.site/web/rest/test/user")
-public class UserController {
+public class UserController extends BaseController {
 
     /** 日志记录器 **/
     private static final Logger logger = LoggerFactory.getLogger(UserController.class);
@@ -44,15 +44,6 @@ public class UserController {
     /** user数据库仓储 **/
     @Autowired
     private UserRepository userRepository;
-
-    /**
-     * home
-     * @return
-     */
-    @RequestMapping()
-    public String home(){
-        return "user:home";
-    }
 
     /**
      * http://localhost:9999/boot.elven.site/web/rest/test/user/findAll

@@ -46,3 +46,8 @@ spring:
             virtualHost: /
             username: guest
             password: guest
+
+# webmagic爬虫获取的文件保存目录
+webmagic:
+    ximalaya:
+        filePath: E:\temp\webmagic\ximalaya

@@ -30,7 +30,7 @@ import site.elven.boot.plugins.rabbitmq.constants.MqConstant;
  */
 @RestController
 @RequestMapping("/boot.elven.tech/web/rest/test/rabbitmq")
-public class RabbitmqController {
+public class RabbitmqController extends BaseController {
     /** 日志记录器 **/
     private static final Logger logger = LoggerFactory.getLogger(RabbitmqController.class);
 
@@ -41,15 +41,6 @@ public class RabbitmqController {
     /** rabbitAdmin **/
     @Autowired
     private AmqpAdmin rabbitAdmin;
-
-    /**
-     * home
-     * @return
-     */
-    @RequestMapping()
-    public String home(){
-        return "rabbitmq:home";
-    }
 
     /**
      * 向消息队列中发送主题为DEMO_EXCHANGE_TOPIC的信息

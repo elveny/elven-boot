@@ -34,21 +34,12 @@ import java.io.IOException;
  */
 @RestController
 @RequestMapping("/boot.elven.site/web/rest/test/ztzip")
-public class ZtzipController {
+public class ZtzipController extends BaseController {
     /** 日志记录器 **/
     private static final Logger logger = LoggerFactory.getLogger(ZtzipController.class);
 
     @Autowired
     private ZtzipManager ztzipManager;
-
-    /**
-     * home
-     * @return
-     */
-    @RequestMapping()
-    public String home(){
-        return "ztzip:home";
-    }
 
     /**
      * 打包
