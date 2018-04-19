@@ -12,3 +12,9 @@
 > 2018-4-18
 >> 重构POIUtils
 
+> 2018-4-18
+>> spring boot 集成H2内存数据库
+
+> 更新计划
+>> 简化build.gradle配置，统一BOM
+

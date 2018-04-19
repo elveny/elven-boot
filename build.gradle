@@ -62,6 +62,8 @@ configure(subprojects) {subproject ->
     bootRepackage.enabled = false
 
     dependencies {
+        compile("org.springframework.boot:spring-boot-devtools")
+
         compile("org.springframework.boot:spring-boot-starter")
         compile("org.springframework.boot:spring-boot-starter-aop")
         compile("org.springframework.boot:spring-boot-starter-web"){
@@ -75,6 +77,7 @@ configure(subprojects) {subproject ->
         compile("org.springframework.boot:spring-boot-starter-batch")
 
         compile("mysql:mysql-connector-java:${mysqlVersion}")
+        compile("com.h2database:h2:${h2Version}")
 
         compile("joda-time:joda-time:${jodatimeVersion}")
 
