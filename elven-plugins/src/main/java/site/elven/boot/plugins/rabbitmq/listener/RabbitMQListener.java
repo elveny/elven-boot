@@ -1,5 +1,5 @@
 /**
- * msxf.com Inc.
+ * elven.site Inc.
  * Copyright (c) 2017-2026 All Rights Reserved.
  */
 package site.elven.boot.plugins.rabbitmq.listener;
